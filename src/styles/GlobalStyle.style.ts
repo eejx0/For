@@ -19,6 +19,7 @@ time, mark, audio, video {
   border: 0;
   vertical-align: baseline;
   scroll-behavior: smooth;
+  user-select: none;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,

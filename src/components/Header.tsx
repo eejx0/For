@@ -6,11 +6,14 @@ import { Color } from "../styles/Color";
 export const Header = () => {
     return (
         <Wrapper>
+            <Container>
             <img src={Logo} alt="logo"/>
             <InputWrapper>
                 <img src={Search} alt="search" />
                 <input placeholder="검색어를 입력하세요"/>
             </InputWrapper>
+            </Container>
+            
         </Wrapper>
     )
 }
@@ -26,6 +29,12 @@ const Wrapper = styled.div`
     z-index: 1000;
     background-color: white;
     gap: 700px;
+`;
+
+const Container = styled.div`
+    display: flex;
+    width: 1100px;
+    justify-content: space-between;
 `;
 
 const InputWrapper = styled.div`

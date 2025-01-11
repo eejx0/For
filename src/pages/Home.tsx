@@ -44,7 +44,6 @@ const Wrapper = styled.div`
     width: 100vw;
     height: 100vh;
     > p {
-        margin-top: 66px;
         font-size: 40px;
         color: ${Color.text};
     }
