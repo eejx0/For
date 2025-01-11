@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -43,10 +43,6 @@ q:before, q:after {
   content: '';
   content: none;
 }
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
 * {
   box-sizing: border-box;
 }
@@ -56,7 +52,9 @@ textarea {
 body {
   color: black;
   line-height: 1.2;
-  font-family: 'Ownglyph_ParkDaHyun', sans-serif
+  font-family: 'Ownglyph_ParkDaHyun', sans-serif;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 .normal		{ font-weight: 400 }
 .bold		{ font-weight: 700 }
@@ -66,4 +64,4 @@ a {
   text-decoration:none;
   color:inherit;
 }
-`;
+`
