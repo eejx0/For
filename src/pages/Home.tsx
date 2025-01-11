@@ -35,12 +35,14 @@ export const Home = () => {
 }
 
 const Wrapper = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
     align-items: center;
     justify-content: center;
-    overflow-x: hidden;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
     > p {
         margin-top: 66px;
         font-size: 40px;

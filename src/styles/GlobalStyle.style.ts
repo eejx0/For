@@ -53,8 +53,6 @@ body {
   color: black;
   line-height: 1.2;
   font-family: 'Ownglyph_ParkDaHyun', sans-serif;
-  overflow-x: hidden;
-  overflow-y: hidden;
 }
 .normal		{ font-weight: 400 }
 .bold		{ font-weight: 700 }
