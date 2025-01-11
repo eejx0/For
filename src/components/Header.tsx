@@ -2,18 +2,20 @@ import Logo from "../assets/logo.svg";
 import Search from "../assets/Search.svg";
 import styled from "styled-components";
 import { Color } from "../styles/Color";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
     return (
         <Wrapper>
             <Container>
-            <img src={Logo} alt="logo"/>
-            <InputWrapper>
-                <img src={Search} alt="search" />
-                <input placeholder="검색어를 입력하세요"/>
-            </InputWrapper>
+                <Link to={'/'}>
+                    <img src={Logo} alt="logo" style={{cursor: 'pointer'}}/>
+                </Link>
+                <InputWrapper>
+                    <img src={Search} alt="search" />
+                    <input placeholder="검색어를 입력하세요"/>
+                </InputWrapper>
             </Container>
-            
         </Wrapper>
     )
 }

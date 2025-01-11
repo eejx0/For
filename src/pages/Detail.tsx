@@ -2,33 +2,23 @@ import { Header } from "../components/Header"
 import styled from "styled-components"
 import { Color } from "../styles/Color"
 import Sample1 from "../assets/Sample1.svg";
-import Sample2 from "../assets/Sample2.svg";
-import Sample3 from "../assets/Sample3.svg";
-import Sample4 from "../assets/Sample4.svg";
-import Sample5 from "../assets/Sample5.svg";
+import { Link } from "react-router-dom";
 
-export const Home = () => {
-    const Images = [
-        {img: Sample1, key: 1},
-        {img: Sample2, key: 2},
-        {img: Sample3, key: 3},
-        {img: Sample4, key: 4},
-        {img: Sample5, key: 5}
-    ];
+export const Detail = () => {
     return (
         <>
             <Header />
             <Wrapper>
-                <p>오늘은 뭐 먹지?</p>
-                <PictureWrapper>
-                    {Images.map((image) => (
-                        <div key={image.key} style={{ backgroundImage: `url(${image.img})` }} />
-                    ))}
-                </PictureWrapper>
+                <Name>스파게티</Name>
+                <Image />
+                <IngredientTitle>- 재료 -</IngredientTitle>
+                <Ingredients>두부 곤약잡곡밥 두부 110g(⅓모), 흰쌀 15g, 현미쌀 3g, 찹쌀 3g, 실곤약 3g 나물준비 콩나물 15g(15개), 표고버섯 4g(1/2장), 애호박 10g(5×2×1cm), 고사리 15g(7줄기), 당근 15g(5×3×1cm), 소금 3g(2/3작은술), 소금 약간(나물데침) 비빔고추장 소스 초고추장 5g(1작은술), 플레인요거트 10g(2작은술), 참기름 2g(1/3작은술) 곁들임 새싹채소 3g</Ingredients>
+                <StyledLink to={'/recipe'}>
+                    레시피 보기
+                </StyledLink>
                 <Wave3></Wave3>
                 <Wave2></Wave2>
                 <Wave1></Wave1>
-                <Button>오늘의 메뉴 보기</Button>
             </Wrapper>
         </>
     )
@@ -39,29 +29,63 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     overflow: hidden;
     width: 100vw;
     height: 100vh;
-    > p {
-        font-size: 50px;
-        color: ${Color.text};
-    }
+    justify-content: center;
 `;
 
+const Name = styled.p`
+    font-size: 35px;
+    color: ${Color.text};
+`;
 
-const PictureWrapper = styled.div`
-    display: flex;
-    gap: 50px;
+const Image = styled.div`
+    width: 534px;
+    height: 226px;
+    border-radius: 30px;
+    background-image: url(${Sample1});
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin-top: 10px;
+`;
+
+const IngredientTitle = styled.p`
+    font-size: 25px;
+    color: ${Color.text};
     margin-top: 50px;
-    z-index: 100;
-    > div {
-        width: 384px;
-        height: 202px;
-        border-radius: 30px;
-        background-repeat: no-repeat;
-        background-size: 100%;
-        background-position: center center;
+    z-index: 900;
+`;
+
+const Ingredients = styled.p`
+    width: 800px;
+    display: flex;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 10px;
+    color: ${Color.text};
+    z-index: 900;
+`;
+
+const StyledLink = styled(Link)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 60px;
+    width: 236px;
+    height: 50px;
+    border-radius: 50px;
+    border: none;
+    background-color: ${Color.text};
+    z-index: 900;
+    color: white;
+    font-family: 'Ownglyph_ParkDaHyun';
+    font-size: 20px;
+    cursor: pointer;
+    &:hover {
+        background-color: rgba(79, 47, 47, 0.83);
+        transition: 0.3s;
     }
 `;
 
@@ -125,23 +149,5 @@ const Wave3 = styled.div`
         to {
             transform: rotate(360deg);
         }
-    }
-`;
-
-const Button = styled.button`
-    margin-top: 100px;
-    width: 236px;
-    height: 50px;
-    border-radius: 50px;
-    border: none;
-    background-color: ${Color.text};
-    z-index: 900;
-    color: white;
-    font-family: 'Ownglyph_ParkDaHyun';
-    font-size: 20px;
-    cursor: pointer;
-    &:hover {
-        background-color: rgba(79, 47, 47, 0.83);
-        transition: 0.3s;
     }
 `;

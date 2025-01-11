@@ -1,13 +1,18 @@
 import styled from "styled-components"
 import Sample1 from "../assets/Sample1.svg";
 import { Color } from "../styles/Color";
+import { Link } from "react-router-dom";
 
 export const SearchBox = () => {
     return (
         <Wrapper>
-            <Image />
+            <Link to={'/detail'}>
+                <Image />
+            </Link>
             <TextWrapper>
-                <Name>스파게티</Name>
+                <Link to={'/detail'}>
+                    <Name>스파게티</Name>
+                </Link>
                 <TagWrapper>
                     <CookKind>밥</CookKind>
                     <HashTag>당호박가루</HashTag>
