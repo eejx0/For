@@ -1,24 +1,28 @@
 import styled from "styled-components"
-import Sample1 from "../assets/Sample1.svg";
 import { Color } from "../styles/Color";
 import { Link } from "react-router-dom";
+import { RecipeItem } from "../apis/type";
 
-export const SearchBox = () => {
+interface SearchBoxProps {
+    recipe: RecipeItem
+}
+
+export const SearchBox: React.FC<SearchBoxProps> = ({recipe}) => {
     return (
         <Wrapper>
-            <Link to={'/detail'}>
-                <Image />
+            <Link to={`/detail/${recipe.RCP_SEQ}`}>
+                <Image style={{backgroundImage: `url(${recipe.ATT_FILE_NO_MAIN})`}}/>
             </Link>
             <TextWrapper>
-                <Link to={'/detail'}>
-                    <Name>스파게티</Name>
+                <Link to={`/detail/${recipe.RCP_SEQ}`}>
+                    <Name>{recipe.RCP_NM}</Name>
                 </Link>
                 <TagWrapper>
-                    <CookKind>밥</CookKind>
-                    <HashTag>당호박가루</HashTag>
-                    <CookMethod>끓이기</CookMethod>
+                    <CookKind>{recipe.RCP_PAT2}</CookKind>
+                    <HashTag>{recipe.HASH_TAG}</HashTag>
+                    <CookMethod>{recipe.RCP_WAY2}</CookMethod>
                 </TagWrapper>
-                <CookInformation>열량: 205, 탄수화물: 35, 단백질: 3, 지방: 6, 나트륨: 68</CookInformation>
+                <CookInformation>열량: {recipe.INFO_ENG}, 탄수화물: {recipe.INFO_CAR}, 단백질: {recipe.INFO_PRO}, 지방: {recipe.INFO_FAT}, 나트륨: {recipe.INFO_NA}</CookInformation>
             </TextWrapper>
         </Wrapper>
     )
@@ -34,7 +38,6 @@ const Image = styled.div`
     width: 384px;
     height: 202px;
     border-radius: 30px;
-    background-image: url(${Sample1});
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: center center;

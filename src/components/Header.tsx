@@ -2,19 +2,36 @@ import Logo from "../assets/logo.svg";
 import Search from "../assets/Search.svg";
 import styled from "styled-components";
 import { Color } from "../styles/Color";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export const Header = () => {
+    const [keyword, setKeyword] = useState("");
+    const navigate = useNavigate();
+
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (keyword.trim()) {
+            navigate(`/search?query=${encodeURIComponent(keyword)}`);
+        }
+    }
+
     return (
         <Wrapper>
             <Container>
                 <Link to={'/'}>
                     <img src={Logo} alt="logo" style={{cursor: 'pointer'}}/>
                 </Link>
-                <InputWrapper>
-                    <img src={Search} alt="search" />
-                    <input placeholder="검색어를 입력하세요"/>
-                </InputWrapper>
+                <form onSubmit={handleSearch}>
+                    <InputWrapper>
+                        <img src={Search} alt="search" />
+                        <input 
+                            placeholder="검색어를 입력하세요"
+                            value={keyword}
+                            onChange={(e) => setKeyword(e.target.value)}
+                        />
+                    </InputWrapper>
+                </form>
             </Container>
         </Wrapper>
     )
