@@ -46,10 +46,10 @@ export const Recipe = () => {
                     const manualText = recipe[manualKey];
                     const manualImg = recipe[manualImgKey];
 
-                    if (manualText && manualImg) {
+                    if (manualText || manualImg) {
                         return (
                             <RecipeBox key={stepNumber}>
-                                <img src={manualImg || NoPicture} alt={`단계 ${stepNumber}`} />
+                                <img src={manualImg || NoPicture} alt="레시피" />
                                 <p>{manualText}</p>
                             </RecipeBox>
                         );
@@ -99,8 +99,11 @@ const RecipeBox = styled.div`
 `;
 
 const Message = styled.p`
-    margin-top: 50px;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
     font-size: 30px;
     color: ${Color.text};
-    margin-bottom: 100px;
+    align-items: center;
+    justify-content: center;
 `;

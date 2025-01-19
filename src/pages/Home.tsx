@@ -6,8 +6,11 @@ import Sample2 from "../assets/Sample2.svg";
 import Sample3 from "../assets/Sample3.svg";
 import Sample4 from "../assets/Sample4.svg";
 import Sample5 from "../assets/Sample5.svg";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
+    const navigate = useNavigate();
+
     const Images = [
         {img: Sample1, key: 1},
         {img: Sample2, key: 2},
@@ -15,6 +18,12 @@ export const Home = () => {
         {img: Sample4, key: 4},
         {img: Sample5, key: 5}
     ];
+
+    const handleRandomRecipe = () => {
+        const randomId = Math.floor(Math.random() * 817) + 28; 
+        navigate(`/detail/${randomId}`);  
+    };
+
     return (
         <>
             <Header />
@@ -28,7 +37,7 @@ export const Home = () => {
                 <Wave3></Wave3>
                 <Wave2></Wave2>
                 <Wave1></Wave1>
-                <Button>오늘의 메뉴 보기</Button>
+                <Button onClick={handleRandomRecipe}>오늘의 메뉴 보기</Button>
             </Wrapper>
         </>
     )

@@ -84,7 +84,7 @@ const IngredientTitle = styled.p`
 `;
 
 const Ingredients = styled.p`
-    width: 800px;
+    max-width: 800px;
     display: flex;
     text-align: center;
     font-size: 20px;
@@ -178,8 +178,11 @@ const Wave3 = styled.div`
 `;
 
 const Message = styled.p`
-    margin-top: 50px;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
     font-size: 30px;
     color: ${Color.text};
-    margin-bottom: 100px;
+    align-items: center;
+    justify-content: center;
 `;
