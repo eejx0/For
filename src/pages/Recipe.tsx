@@ -1,18 +1,62 @@
 import { Header } from "../components/Header"
 import styled from "styled-components"
 import { Color } from "../styles/Color";
-import Sample1 from "../assets/Sample1.svg";
-// import NoPicture from "../assets/NoPicture.svg";
+import { RecipeItem } from "../apis/type";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import NoPicture from "../assets/NoPicture.svg";
+import { getRecipeDetail } from "../apis/apis";
 
 export const Recipe = () => {
+    const [recipe, setRecipe] = useState<RecipeItem | null>(null);
+    const [loading, setLoading] = useState(true);
+    const { id } = useParams();
+
+    useEffect(() => {
+        const fetchRecipe = async () => {
+            try {
+                setLoading(true);
+                const data = await getRecipeDetail(1, 999, id);
+                if (data) {
+                    setRecipe(data);
+                } else {
+                    console.error("레시피가 없습니다.");
+                }
+            } catch (error) {
+                console.error("레시피 불러오기 실패: ", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchRecipe();
+    }, [id]);
+
+    if (loading) return <Message>로딩 중...</Message>
+    if (!recipe) return <Message>레시피를 찾을 수 없습니다.</Message>;
+
     return (
         <Wrapper>
             <Header />
             <Container>
-                <RecipeBox>
-                    <img src={Sample1} alt="샘플" />
-                    <p>레시피</p>
-                </RecipeBox>
+            {Array.from({ length: 20 }).map((_, index) => {
+                    const stepNumber = index + 1;
+                    const manualKey = `MANUAL${stepNumber.toString().padStart(2, "0")}` as keyof RecipeItem;
+                    const manualImgKey = `MANUAL_IMG${stepNumber.toString().padStart(2, "0")}` as keyof RecipeItem;
+
+                    const manualText = recipe[manualKey];
+                    const manualImg = recipe[manualImgKey];
+
+                    if (manualText && manualImg) {
+                        return (
+                            <RecipeBox key={stepNumber}>
+                                <img src={manualImg || NoPicture} alt={`단계 ${stepNumber}`} />
+                                <p>{manualText}</p>
+                            </RecipeBox>
+                        );
+                    }
+
+                    return null; 
+                })}
             </Container>
         </Wrapper>
     )
@@ -52,4 +96,11 @@ const RecipeBox = styled.div`
         font-size: 20px;
         color: ${Color.text};
     }
+`;
+
+const Message = styled.p`
+    margin-top: 50px;
+    font-size: 30px;
+    color: ${Color.text};
+    margin-bottom: 100px;
 `;

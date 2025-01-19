@@ -1,9 +1,11 @@
 import instance from './axios'
-// import { RequestItem } from "./type";
 import { RecipeItem } from './type'
-import { RecipeResponse } from './type'
 
-export const getRecipes = async (
+const keyId = 'f6c6e5d7b1454196a082'
+const serviceId = 'COOKRCP01'
+const dataType = 'json'
+
+export const getRecipeList = async (
   startIdx: number,
   endIdx: number,
   RCP_NM?: string,
@@ -12,12 +14,10 @@ export const getRecipes = async (
   RCP_PAT2?: string
 ) => {
   try {
-    const keyId = 'f6c6e5d7b1454196a082'
-    const serviceId = 'COOKRCP01'
-    const dataType = 'json'
     const baseUrl = `http://openapi.foodsafetykorea.go.kr/api/${keyId}/${serviceId}/${dataType}/${startIdx}/${endIdx}`
 
     const params: Record<string, string> = {}
+
     if (RCP_NM) params.RCP_NM = encodeURIComponent(RCP_NM)
     if (RCP_PARTS_DTLS)
       params.RCP_PARTS_DTLS = encodeURIComponent(RCP_PARTS_DTLS)
@@ -28,33 +28,81 @@ export const getRecipes = async (
     const requestUrl = queryString ? `${baseUrl}?${queryString}` : baseUrl
 
     const response = await instance.get<{
-        COOKRCP01: {
-          RESULT: {
-            MSG: string;
-            CODE: string;
-          };
-          row: RecipeItem[]; 
+      COOKRCP01: {
+        RESULT: {
+          MSG: string
+          CODE: string
         }
-      }>(requestUrl)
-
-    if (!response || !response.data || !response.data.COOKRCP01) {
-        console.error('API 응답이 유효하지 않습니다.');
-        return []
-    }
+        row: RecipeItem[]
+      }
+    }>(requestUrl)
 
     const recipes = response.data.COOKRCP01.row
 
     if (RCP_NM) {
-        const decodedRcpNm = decodeURIComponent(RCP_NM) // 디코딩
-        const filteredRecipes = recipes.filter(recipe =>
-          recipe.RCP_NM && recipe.RCP_NM.includes(decodedRcpNm) // 디코딩된 값으로 필터링
-        )
-        return filteredRecipes
+      const decodedRcpNm = decodeURIComponent(RCP_NM)
+      const filteredRecipes = recipes.filter(
+        (recipe) => recipe.RCP_NM && recipe.RCP_NM.includes(decodedRcpNm)
+      )
+      return filteredRecipes
     }
 
     return recipes
   } catch (error) {
-    console.error('레시피 데이터 불러오기 실패: ', error)
-    throw error
+    console.error('레시피 리스트 불러오기 실패: ', error)
+  }
+}
+
+export const getRealRecipe = async (
+  startIdx: number,
+  endIdx: number,
+  RCP_SEQ?: string
+) => {
+  try {
+    const baseUrl = `http://openapi.foodsafetykorea.go.kr/api/${keyId}/${serviceId}/${dataType}`
+
+    const requestUrl = RCP_SEQ
+      ? `${baseUrl}/${startIdx}/${endIdx}/RCP_SEQ=${encodeURIComponent(RCP_SEQ)}`
+      : `${baseUrl}/${startIdx}/${endIdx}`
+
+    const response = await instance.get(requestUrl);
+    const items = response.data?.foodsafetykorea?.response?.body?.items?.item;
+    if (items) {
+      return items;
+    }
+  } catch (error) {
+    console.error("레시피 불러오기 실패: ", error);
+  }
+}
+
+export const getRecipeDetail = async (
+  startIdx: number,
+  endIdx: number,
+  RCP_SEQ?: string
+) => {
+  try {
+    const baseUrl = `http://openapi.foodsafetykorea.go.kr/api/${keyId}/${serviceId}/${dataType}`
+
+    const requestUrl = RCP_SEQ
+      ? `${baseUrl}/${startIdx}/${endIdx}/RCP_SEQ=${encodeURIComponent(RCP_SEQ)}`
+      : `${baseUrl}/${startIdx}/${endIdx}`
+
+    const response = await instance.get<{
+      COOKRCP01: {
+        RESULT: {
+          MSG: string
+          CODE: string
+        }
+        row: RecipeItem[]
+      }
+    }>(requestUrl)
+
+    const { row } = response.data.COOKRCP01
+
+    const recipe = row.find(item => item.RCP_SEQ === RCP_SEQ)
+
+    return recipe
+  } catch (error) {
+    console.error('레시피 상세 정보 불러오기 실패: ', error)
   }
 }

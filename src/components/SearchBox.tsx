@@ -19,7 +19,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({recipe}) => {
                 </Link>
                 <TagWrapper>
                     <CookKind>{recipe.RCP_PAT2}</CookKind>
-                    <HashTag>{recipe.HASH_TAG}</HashTag>
+                    {recipe.HASH_TAG.length > 0 && <HashTag>{recipe.HASH_TAG}</HashTag>}
                     <CookMethod>{recipe.RCP_WAY2}</CookMethod>
                 </TagWrapper>
                 <CookInformation>열량: {recipe.INFO_ENG}, 탄수화물: {recipe.INFO_CAR}, 단백질: {recipe.INFO_PRO}, 지방: {recipe.INFO_FAT}, 나트륨: {recipe.INFO_NA}</CookInformation>

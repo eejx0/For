@@ -2,18 +2,43 @@ import { Header } from "../components/Header"
 import styled from "styled-components"
 import { Color } from "../styles/Color"
 import Sample1 from "../assets/Sample1.svg";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { getRecipeDetail } from "../apis/apis";
+import { useEffect, useState } from "react";
 
 export const Detail = () => {
+    const { id } = useParams();
+    const [recipe, setRecipe] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
+    
+    useEffect(() => {
+        const fetchRecipeDetail = async () => {
+            try {
+                setLoading(true);
+                const data = await getRecipeDetail(1, 999, id);
+                setRecipe(data);
+            } catch (error) {
+                console.error("레시피 상세보기를 불러오는데 오류 발생: ", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        if (id) {
+            fetchRecipeDetail();
+        }
+    }, [id])
+
+    if (loading) return <Message>로딩 중...</Message>;
+
     return (
         <>
             <Header />
             <Wrapper>
-                <Name>스파게티</Name>
-                <Image />
+                <Name>{recipe.RCP_NM}</Name>
+                <Image style={{backgroundImage: `url(${recipe.ATT_FILE_NO_MK})`}}/>
                 <IngredientTitle>- 재료 -</IngredientTitle>
-                <Ingredients>두부 곤약잡곡밥 두부 110g(⅓모), 흰쌀 15g, 현미쌀 3g, 찹쌀 3g, 실곤약 3g 나물준비 콩나물 15g(15개), 표고버섯 4g(1/2장), 애호박 10g(5×2×1cm), 고사리 15g(7줄기), 당근 15g(5×3×1cm), 소금 3g(2/3작은술), 소금 약간(나물데침) 비빔고추장 소스 초고추장 5g(1작은술), 플레인요거트 10g(2작은술), 참기름 2g(1/3작은술) 곁들임 새싹채소 3g</Ingredients>
-                <StyledLink to={'/recipe'}>
+                <Ingredients>{recipe.RCP_PARTS_DTLS}</Ingredients>
+                <StyledLink to={`/recipe/${recipe.RCP_SEQ}`}>
                     레시피 보기
                 </StyledLink>
                 <Wave3></Wave3>
@@ -150,4 +175,11 @@ const Wave3 = styled.div`
             transform: rotate(360deg);
         }
     }
+`;
+
+const Message = styled.p`
+    margin-top: 50px;
+    font-size: 30px;
+    color: ${Color.text};
+    margin-bottom: 100px;
 `;
