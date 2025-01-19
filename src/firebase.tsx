@@ -3,13 +3,13 @@ import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDqiA7zHTepOFU3g83-utwUopujFhJYonY",
-  authDomain: "foru-e6bb4.firebaseapp.com",
-  projectId: "foru-e6bb4",
-  storageBucket: "foru-e6bb4.firebasestorage.app",
-  messagingSenderId: "301503269405",
-  appId: "1:301503269405:web:5ef2ed679a8b596d4794f4",
-  measurementId: "G-PB02R6RZZ7"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROFECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
 export const app = initializeApp(firebaseConfig);

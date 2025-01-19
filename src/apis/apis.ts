@@ -1,8 +1,9 @@
 import instance from './axios'
 import { RecipeItem } from './type'
 
-const keyId = 'f6c6e5d7b1454196a082'
-const serviceId = 'COOKRCP01'
+const keyId = process.env.REACT_APP_KEY_ID
+const serviceId =  process.env.REACT_APP_SERVICE_ID
+const base = process.env.REACT_APP_BASE_URL
 const dataType = 'json'
 
 export const getRecipeList = async (
@@ -14,7 +15,7 @@ export const getRecipeList = async (
   RCP_PAT2?: string
 ) => {
   try {
-    const baseUrl = `http://openapi.foodsafetykorea.go.kr/api/${keyId}/${serviceId}/${dataType}/${startIdx}/${endIdx}`
+    const baseUrl = `${base}/${keyId}/${serviceId}/${dataType}/${startIdx}/${endIdx}`
 
     const params: Record<string, string> = {}
 
@@ -59,7 +60,7 @@ export const getRealRecipe = async (
   RCP_SEQ?: string
 ) => {
   try {
-    const baseUrl = `http://openapi.foodsafetykorea.go.kr/api/${keyId}/${serviceId}/${dataType}`
+    const baseUrl = `${base}/${keyId}/${serviceId}/${dataType}`
 
     const requestUrl = RCP_SEQ
       ? `${baseUrl}/${startIdx}/${endIdx}/RCP_SEQ=${encodeURIComponent(RCP_SEQ)}`
@@ -81,7 +82,7 @@ export const getRecipeDetail = async (
   RCP_SEQ?: string
 ) => {
   try {
-    const baseUrl = `http://openapi.foodsafetykorea.go.kr/api/${keyId}/${serviceId}/${dataType}`
+    const baseUrl = `${base}/${keyId}/${serviceId}/${dataType}`
 
     const requestUrl = RCP_SEQ
       ? `${baseUrl}/${startIdx}/${endIdx}/RCP_SEQ=${encodeURIComponent(RCP_SEQ)}`
